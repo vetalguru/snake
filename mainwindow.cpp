@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
+#include <QToolBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -26,6 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     aboutMenu->addAction(aboutAction);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
+
+    // Toolbar
+    QToolBar *toolBar = new QToolBar(this);
+    toolBar->addAction(exitAction);
+    toolBar->addAction(aboutAction);
+    addToolBar(toolBar);
 }
 
 MainWindow::~MainWindow() {
