@@ -39,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Statusbar
     statusBar()->addWidget(new QLabel());
+
+    // Central Widget
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->setStyleSheet("background-color: red;");
+    setCentralWidget(centralWidget);
 }
 
 MainWindow::~MainWindow() {
