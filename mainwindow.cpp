@@ -10,6 +10,8 @@
 #include <QToolBar>
 #include <QStatusBar>
 
+#include "snakewidget.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     // Actions
@@ -41,8 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     statusBar()->addWidget(new QLabel());
 
     // Central Widget
-    QWidget *centralWidget = new QWidget(this);
-    centralWidget->setStyleSheet("background-color: red;");
+    QWidget *centralWidget = new SnakeWidget(this);
     setCentralWidget(centralWidget);
 }
 
