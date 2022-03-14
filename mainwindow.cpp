@@ -1,12 +1,14 @@
 #include "mainwindow.h"
 
 #include <QAction>
-#include "QApplication"
-#include "QIcon"
+#include <QApplication>
+#include <QIcon>
+#include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QToolBar>
+#include <QStatusBar>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -34,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
     toolBar->addAction(exitAction);
     toolBar->addAction(aboutAction);
     addToolBar(toolBar);
+
+    // Statusbar
+    statusBar()->addWidget(new QLabel());
 }
 
 MainWindow::~MainWindow() {
