@@ -47,9 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(centralWidget);
 }
 
-MainWindow::~MainWindow() {
-}
-
 void MainWindow::aboutDialog() {
     QMessageBox msg;
     msg.setText("Snake");

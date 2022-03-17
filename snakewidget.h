@@ -1,6 +1,7 @@
 #ifndef SNAKEWIDGET_H
 #define SNAKEWIDGET_H
 
+#include <QSize>
 #include <QWidget>
 
 class SnakeWidget : public QWidget
@@ -10,7 +11,10 @@ public:
     explicit SnakeWidget(QWidget *parent = nullptr);
 
 private:
-    void SetBackgroundColor();
+    const QSize MIN_MAIN_WIDGET_SIZE{300, 300};
+
+private:
+    void setBackgroundColor();
 
 };
 

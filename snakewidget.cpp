@@ -5,10 +5,12 @@
 SnakeWidget::SnakeWidget(QWidget *parent)
     : QWidget{parent}
 {
-    SetBackgroundColor();
+    setBackgroundColor();
+
+    setMinimumSize(MIN_MAIN_WIDGET_SIZE);
 }
 
-void SnakeWidget::SetBackgroundColor() {
+void SnakeWidget::setBackgroundColor() {
     QPalette pal;
     pal.setColor(QPalette::Window, Qt::black);
     setAutoFillBackground(true);
