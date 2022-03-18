@@ -1,6 +1,7 @@
 #include "snakewidget.h"
 
 #include <QPalette>
+#include <QTime>
 
 SnakeWidget::SnakeWidget(QWidget *parent)
     : QWidget{parent}
@@ -15,6 +16,10 @@ SnakeWidget::SnakeWidget(QWidget *parent)
 
     generateApplePosition();
     initSnakePosition();
+
+    m_timerId = startTimer(DEFAULT_DELAY);
+
+    setFocus();
 }
 
 void SnakeWidget::paintEvent(QPaintEvent *e) {
@@ -23,6 +28,33 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
     QPainter painter(this);
     drawApple(painter);
     drawSnake(painter);
+}
+
+void SnakeWidget::timerEvent(QTimerEvent *e) {
+    Q_UNUSED(e);
+
+    moveSnake();
+    repaint();
+}
+
+void SnakeWidget::keyPressEvent(QKeyEvent *e) {
+    int key = e->key();
+
+    if ((key == Qt::Key_Left) && m_direction != Direction::RIGHT) {
+        m_direction = Direction::LEFT;
+    }
+
+    if ((key == Qt::Key_Right) && m_direction != Direction::LEFT) {
+        m_direction = Direction::RIGHT;
+    }
+
+    if ((key == Qt::Key_Up) && m_direction != Direction::DOWN) {
+        m_direction = Direction::UP;
+    }
+
+    if ((key == Qt::Key_Down) && m_direction != Direction::UP) {
+        m_direction = Direction::DOWN;
+    }
 }
 
 void SnakeWidget::setBackgroundColor() {
@@ -38,6 +70,8 @@ void SnakeWidget::generateApplePosition() {
 }
 
 void SnakeWidget::initSnakePosition() {
+    m_direction = Direction::RIGHT;
+
     m_currentSnakeSize = SNAKE_MIN_SIZE;
     for (int i =0; i < m_currentSnakeSize; ++i) {
         m_snake[i].setX(50 - i * DOT_SIZE);
@@ -52,5 +86,27 @@ void SnakeWidget::drawApple(QPainter &p) {
 void SnakeWidget::drawSnake(QPainter &p) {
     for (int i = 0; i < m_currentSnakeSize; ++i) {
         p.drawImage(m_snake[i].x(), m_snake[i].y(), (i ? m_bodyImage : m_headImage));
+    }
+}
+
+void SnakeWidget::moveSnake() {
+    for (int i = m_currentSnakeSize; i > 0; --i) {
+        m_snake[i] = m_snake[i - 1];
+    }
+
+    if (m_direction == Direction::LEFT) {
+        m_snake[0].setX(m_snake[0].x() - DOT_SIZE);
+    }
+
+    if (m_direction == Direction::RIGHT) {
+        m_snake[0].setX(m_snake[0].x() + DOT_SIZE);
+    }
+
+    if (m_direction == Direction::UP) {
+        m_snake[0].setY(m_snake[0].y() - DOT_SIZE);
+    }
+
+    if (m_direction == Direction::DOWN) {
+        m_snake[0].setY(m_snake[0].y() + DOT_SIZE);
     }
 }

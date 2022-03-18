@@ -2,6 +2,7 @@
 #define SNAKEWIDGET_H
 
 #include <QImage>
+#include <QKeyEvent>
 #include <QPainter>
 #include <QPoint>
 #include <QSize>
@@ -15,23 +16,34 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *e);
+    void timerEvent(QTimerEvent *e);
+    void keyPressEvent(QKeyEvent *e);
 
 private:
+    enum class Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+    };
+
+private:
+    static constexpr int DEFAULT_DELAY{150};
+    static constexpr int DOT_SIZE{10};
     static constexpr QSize MIN_MAIN_WIDGET_SIZE{300, 300};
+    static constexpr int RAND_POS{29};
     static constexpr int SNAKE_MAX_SIZE{100};
     static constexpr int SNAKE_MIN_SIZE{3};
-    static constexpr int DOT_SIZE{10};
-    static constexpr int RAND_POS{29};
 
 private:
     void setBackgroundColor();
 
     void generateApplePosition();
+    void drawApple(QPainter &p);
 
     void initSnakePosition();
-
-    void drawApple(QPainter &p);
     void drawSnake(QPainter &p);
+    void moveSnake();
 
 private:
     QImage m_appleImage;
@@ -41,6 +53,9 @@ private:
     QImage m_bodyImage;
     QPoint m_snake[SNAKE_MAX_SIZE];
     int m_currentSnakeSize;
+    Direction m_direction;
+
+    int m_timerId;
 
 };
 
