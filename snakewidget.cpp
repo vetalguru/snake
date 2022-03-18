@@ -14,6 +14,7 @@ SnakeWidget::SnakeWidget(QWidget *parent)
     m_appleImage.load("../res/apple.png");
 
     generateApplePosition();
+    initSnakePosition();
 }
 
 void SnakeWidget::paintEvent(QPaintEvent *e) {
@@ -21,6 +22,7 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
 
     QPainter painter(this);
     drawApple(painter);
+    drawSnake(painter);
 }
 
 void SnakeWidget::setBackgroundColor() {
@@ -35,6 +37,20 @@ void SnakeWidget::generateApplePosition() {
     m_currentApplePoint.setY(150);
 }
 
+void SnakeWidget::initSnakePosition() {
+    m_currentSnakeSize = SNAKE_MIN_SIZE;
+    for (int i =0; i < m_currentSnakeSize; ++i) {
+        m_snake[i].setX(50 - i * DOT_SIZE);
+        m_snake[i].setY(50);
+    }
+}
+
 void SnakeWidget::drawApple(QPainter &p) {
     p.drawImage(m_currentApplePoint.x(), m_currentApplePoint.y(), m_appleImage);
+}
+
+void SnakeWidget::drawSnake(QPainter &p) {
+    for (int i = 0; i < m_currentSnakeSize; ++i) {
+        p.drawImage(m_snake[i].x(), m_snake[i].y(), (i ? m_bodyImage : m_headImage));
+    }
 }
