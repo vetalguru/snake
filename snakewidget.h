@@ -16,6 +16,7 @@ public:
 
 public slots:
     void startGame();
+    void pauseGame();
 
 protected:
     void paintEvent(QPaintEvent *e);
@@ -64,6 +65,7 @@ private:
     int m_timerId;
 
     bool m_isStarted;
+    bool m_isPaused;
     bool m_isGameOver;
 
 };

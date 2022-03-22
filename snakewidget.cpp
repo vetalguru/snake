@@ -6,21 +6,26 @@
 
 SnakeWidget::SnakeWidget(QWidget *parent)
     : QWidget{parent}
+    , m_timerId{0}
+    , m_isStarted{false}
+    , m_isPaused{false}
 {
     setBackgroundColor();
-
-    setMinimumSize(MIN_MAIN_WIDGET_SIZE);
 
     m_headImage.load("../res/head.png");
     m_bodyImage.load("../res/body.png");
     m_appleImage.load("../res/apple.png");
 
-    m_isStarted = false;
-
+    setMinimumSize(MIN_MAIN_WIDGET_SIZE);
     setFocus();
 }
 
 void SnakeWidget::startGame() {
+    if (m_isPaused) {
+        m_isPaused = false;
+        return;
+    }
+
     if (m_isStarted) {
         return;
     }
@@ -32,6 +37,10 @@ void SnakeWidget::startGame() {
     generateApplePosition();
 
     m_timerId = startTimer(DEFAULT_DELAY);
+}
+
+void SnakeWidget::pauseGame() {
+    m_isPaused = true;
 }
 
 void SnakeWidget::paintEvent(QPaintEvent *e) {
@@ -54,7 +63,7 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
 void SnakeWidget::timerEvent(QTimerEvent *e) {
     Q_UNUSED(e);
 
-    if (!m_isGameOver) {
+    if (!m_isGameOver && !m_isPaused) {
         appleEatingHandler();
         collisionHandler();
         moveSnake();
@@ -183,7 +192,10 @@ void SnakeWidget::collisionHandler() {
     }
 
     if (m_isGameOver) {
-        killTimer(m_timerId);
+        if (m_timerId) {
+            killTimer(m_timerId);
+            m_timerId = 0;
+        }
     }
 }
 
