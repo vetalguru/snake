@@ -14,6 +14,9 @@ class SnakeWidget : public QWidget
 public:
     explicit SnakeWidget(QWidget *parent = nullptr);
 
+public slots:
+    void startGame();
+
 protected:
     void paintEvent(QPaintEvent *e);
     void timerEvent(QTimerEvent *e);
@@ -61,6 +64,7 @@ private:
 
     int m_timerId;
 
+    bool m_isStarted;
     bool m_isGameOver;
 
 };

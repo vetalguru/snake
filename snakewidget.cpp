@@ -15,18 +15,31 @@ SnakeWidget::SnakeWidget(QWidget *parent)
     m_bodyImage.load("../res/body.png");
     m_appleImage.load("../res/apple.png");
 
-    initSnakePosition();
-    generateApplePosition();
-
-    m_timerId = startTimer(DEFAULT_DELAY);
-
-    m_isGameOver = false;
+    m_isStarted = false;
 
     setFocus();
 }
 
+void SnakeWidget::startGame() {
+    if (m_isStarted) {
+        return;
+    }
+
+    m_isGameOver = false;
+    m_isStarted = true;
+
+    initSnakePosition();
+    generateApplePosition();
+
+    m_timerId = startTimer(DEFAULT_DELAY);
+}
+
 void SnakeWidget::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
+
+    if (!m_isStarted) {
+        return;
+    }
 
     QPainter painter(this);
     if (!m_isGameOver) {
@@ -34,6 +47,7 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
         drawSnake(painter);
     } else {
         gameOverHandler(painter);
+        m_isStarted = false;
     }
 }
 
