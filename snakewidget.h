@@ -40,6 +40,7 @@ private:
 
     void generateApplePosition();
     void drawApple(QPainter &p);
+    void appleEatingHandler();
 
     void initSnakePosition();
     void drawSnake(QPainter &p);

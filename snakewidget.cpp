@@ -33,6 +33,7 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
 void SnakeWidget::timerEvent(QTimerEvent *e) {
     Q_UNUSED(e);
 
+    appleEatingHandler();
     moveSnake();
     repaint();
 }
@@ -81,6 +82,13 @@ void SnakeWidget::initSnakePosition() {
 
 void SnakeWidget::drawApple(QPainter &p) {
     p.drawImage(m_currentApplePoint.x(), m_currentApplePoint.y(), m_appleImage);
+}
+
+void SnakeWidget::appleEatingHandler() {
+    if (m_snake[0] == m_currentApplePoint) {
+        m_currentSnakeSize++;
+        generateApplePosition();
+    }
 }
 
 void SnakeWidget::drawSnake(QPainter &p) {
