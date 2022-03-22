@@ -46,6 +46,9 @@ private:
     void drawSnake(QPainter &p);
     void moveSnake();
 
+    void collisionHandler();
+    void gameOverHandler(QPainter &p);
+
 private:
     QImage m_appleImage;
     QPoint m_currentApplePoint;
@@ -57,6 +60,8 @@ private:
     Direction m_direction;
 
     int m_timerId;
+
+    bool m_isGameOver;
 
 };
 

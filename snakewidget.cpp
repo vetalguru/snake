@@ -15,10 +15,12 @@ SnakeWidget::SnakeWidget(QWidget *parent)
     m_bodyImage.load("../res/body.png");
     m_appleImage.load("../res/apple.png");
 
-    generateApplePosition();
     initSnakePosition();
+    generateApplePosition();
 
     m_timerId = startTimer(DEFAULT_DELAY);
+
+    m_isGameOver = false;
 
     setFocus();
 }
@@ -27,15 +29,23 @@ void SnakeWidget::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
 
     QPainter painter(this);
-    drawApple(painter);
-    drawSnake(painter);
+    if (!m_isGameOver) {
+        drawApple(painter);
+        drawSnake(painter);
+    } else {
+        gameOverHandler(painter);
+    }
 }
 
 void SnakeWidget::timerEvent(QTimerEvent *e) {
     Q_UNUSED(e);
 
-    appleEatingHandler();
-    moveSnake();
+    if (!m_isGameOver) {
+        appleEatingHandler();
+        collisionHandler();
+        moveSnake();
+    }
+
     repaint();
 }
 
@@ -131,4 +141,44 @@ void SnakeWidget::moveSnake() {
     if (m_direction == Direction::DOWN) {
         m_snake[0].setY(m_snake[0].y() + DOT_SIZE);
     }
+}
+
+void SnakeWidget::collisionHandler() {
+     // Check snake
+    for (int i = m_currentSnakeSize; i > 0; --i) {
+        if ((i > 4) && m_snake[0] == m_snake[i]) {
+            m_isGameOver = true;
+        }
+    }
+
+    // Check borders
+    if (m_snake[0].y() >= height()) {
+        m_isGameOver = true;
+    }
+
+    if (m_snake[0].y() < 0) {
+        m_isGameOver = true;
+    }
+
+    if (m_snake[0].x() >= width()) {
+        m_isGameOver = true;
+    }
+
+    if (m_snake[0].x() < 0) {
+        m_isGameOver = true;
+    }
+
+    if (m_isGameOver) {
+        killTimer(m_timerId);
+    }
+}
+
+void SnakeWidget::gameOverHandler(QPainter &p) {
+    const QFont font("Courier", 15, QFont::DemiBold);
+
+    p.setPen(QColor(Qt::white));
+    p.setFont(font);
+
+    p.translate(QPoint(width()/2, height()/2));
+    p.drawText(-70, 0, "Game over!!!");
 }
