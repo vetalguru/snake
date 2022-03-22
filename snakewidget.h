@@ -34,7 +34,6 @@ private:
     static constexpr int DEFAULT_DELAY{150};
     static constexpr int DOT_SIZE{10};
     static constexpr QSize MIN_MAIN_WIDGET_SIZE{300, 300};
-    static constexpr int RAND_POS{29};
     static constexpr int SNAKE_MAX_SIZE{100};
     static constexpr int SNAKE_MIN_SIZE{3};
 
