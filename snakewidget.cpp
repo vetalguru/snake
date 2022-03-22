@@ -43,6 +43,10 @@ void SnakeWidget::pauseGame() {
     m_isPaused = true;
 }
 
+void SnakeWidget::stopGame() {
+    m_isStarted = false;
+}
+
 void SnakeWidget::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
 

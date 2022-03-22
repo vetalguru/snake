@@ -17,6 +17,7 @@ public:
 public slots:
     void startGame();
     void pauseGame();
+    void stopGame();
 
 protected:
     void paintEvent(QPaintEvent *e);

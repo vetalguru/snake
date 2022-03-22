@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Actions
     QAction *startGameAction = new QAction(QIcon::fromTheme("media-playback-start"), "&Start", this);
     QAction *pauseGameAction = new QAction(QIcon::fromTheme("media-playback-pause"), "&Pause", this);
+    QAction *stopGameAction = new QAction(QIcon::fromTheme("media-playback-stop"), "S&top", this);
     QAction *exitAction = new QAction(QIcon::fromTheme("application-exit"), "&Exit", this);
     QAction *aboutQtAction = new QAction(QIcon::fromTheme("help-about"), "About &Qt ...", this);
     QAction *aboutAction = new QAction(QIcon::fromTheme("help-about"), "&About ...", this);
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Connections
     connect(startGameAction, SIGNAL(triggered()), centralWidget, SLOT(startGame()));
     connect(pauseGameAction, SIGNAL(triggered()), centralWidget, SLOT(pauseGame()));
+    connect(stopGameAction, SIGNAL(triggered()), centralWidget, SLOT(stopGame()));
     connect(exitAction, &QAction::triggered, qApp, QApplication::quit);
     connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
@@ -40,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     QMenu *gameMenu = menuBar()->addMenu("&Game");
     gameMenu->addAction(startGameAction);
     gameMenu->addAction(pauseGameAction);
+    gameMenu->addAction(stopGameAction);
 
     // About
     QMenu *aboutMenu = menuBar()->addMenu("&Help");
@@ -50,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar *toolBar = new QToolBar(this);
     toolBar->addAction(startGameAction);
     toolBar->addAction(pauseGameAction);
+    toolBar->addAction(stopGameAction);
     toolBar->addAction(exitAction);
     toolBar->addAction(aboutAction);
     addToolBar(toolBar);
