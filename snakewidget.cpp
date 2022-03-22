@@ -67,10 +67,21 @@ void SnakeWidget::setBackgroundColor() {
 }
 
 void SnakeWidget::generateApplePosition() {
-    m_currentApplePoint.setX(QRandomGenerator::global()->generate() %
+    bool ok;
+    do {
+        ok = true;
+        m_currentApplePoint.setX(QRandomGenerator::global()->generate() %
                              (width() / DOT_SIZE) * DOT_SIZE);
-    m_currentApplePoint.setY(QRandomGenerator::global()->generate() %
+        m_currentApplePoint.setY(QRandomGenerator::global()->generate() %
                              (height() / DOT_SIZE) * DOT_SIZE);
+
+        for (int i = 0; i < m_currentSnakeSize; ++i) {
+            if (m_snake[i] == m_currentApplePoint) {
+                ok = false;
+                break;
+            }
+        }
+    } while (!ok);
 }
 
 void SnakeWidget::initSnakePosition() {
