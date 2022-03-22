@@ -1,6 +1,7 @@
 #include "snakewidget.h"
 
 #include <QPalette>
+#include <QRandomGenerator>
 #include <QTime>
 
 SnakeWidget::SnakeWidget(QWidget *parent)
@@ -66,8 +67,10 @@ void SnakeWidget::setBackgroundColor() {
 }
 
 void SnakeWidget::generateApplePosition() {
-    m_currentApplePoint.setX(150);
-    m_currentApplePoint.setY(150);
+    m_currentApplePoint.setX(QRandomGenerator::global()->generate() %
+                             (width() / DOT_SIZE) * DOT_SIZE);
+    m_currentApplePoint.setY(QRandomGenerator::global()->generate() %
+                             (height() / DOT_SIZE) * DOT_SIZE);
 }
 
 void SnakeWidget::initSnakePosition() {
