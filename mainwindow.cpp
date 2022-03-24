@@ -61,13 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     toolBar->addAction(aboutAction);
     addToolBar(toolBar);
 
-    // Statusbar
-    statusBar()->addPermanentWidget(new QLabel("Apple number: "));
-    m_appleCounterLabel = new QLabel(QString::number(0));
-    statusBar()->addPermanentWidget(m_appleCounterLabel);
-    statusBar()->addPermanentWidget(new QLabel("| Snake size: "));
-    m_snakeLengthLabel = new QLabel(QString::number(0));
-    statusBar()->addPermanentWidget(m_snakeLengthLabel);
+    initStatusBar();
 }
 
 void MainWindow::aboutDialog() {
@@ -82,4 +76,13 @@ void MainWindow::changeAppleNumber(int number) {
 
 void MainWindow::changeSnakeLength(int size) {
     m_snakeLengthLabel->setText(QString::number(size));
+}
+
+void MainWindow::initStatusBar() {
+    statusBar()->addPermanentWidget(new QLabel("Apple number: "));
+    m_appleCounterLabel = new QLabel(QString::number(0));
+    statusBar()->addPermanentWidget(m_appleCounterLabel);
+    statusBar()->addPermanentWidget(new QLabel("| Snake size: "));
+    m_snakeLengthLabel = new QLabel(QString::number(0));
+    statusBar()->addPermanentWidget(m_snakeLengthLabel);
 }

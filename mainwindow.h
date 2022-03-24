@@ -17,6 +17,9 @@ private slots:
     void changeSnakeLength(int);
 
 private:
+    void initStatusBar();
+
+private:
     QLabel *m_appleCounterLabel;
     QLabel *m_snakeLengthLabel;
 };
