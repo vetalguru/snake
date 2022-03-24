@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QLabel>
 #include <QMainWindow>
 
 class MainWindow : public QMainWindow
@@ -12,6 +13,10 @@ public:
 
 private slots:
     void aboutDialog();
+    void changeAppleNumber(int);
+
+private:
+    QLabel *m_appleCounterLabel;
 };
 
 #endif // MAINWINDOW_H

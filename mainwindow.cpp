@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
 
+    connect(centralWidget, SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
+
     // Main menu
     // File
     QMenu *fileMenu = menuBar()->addMenu("&File");
@@ -59,11 +61,17 @@ MainWindow::MainWindow(QWidget *parent)
     addToolBar(toolBar);
 
     // Statusbar
-    statusBar()->addWidget(new QLabel());
+    statusBar()->addPermanentWidget(new QLabel("Apple Num: "));
+    m_appleCounterLabel = new QLabel(QString::number(0));
+    statusBar()->addPermanentWidget(m_appleCounterLabel);
 }
 
 void MainWindow::aboutDialog() {
     QMessageBox msg;
     msg.setText("Snake");
     msg.exec();
+}
+
+void MainWindow::changeAppleNumber(int number) {
+    m_appleCounterLabel->setText(QString::number(number));
 }

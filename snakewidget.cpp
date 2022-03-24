@@ -32,6 +32,7 @@ void SnakeWidget::startGame() {
 
     m_isGameOver = false;
     m_isStarted = true;
+    m_appleCounter = 0;
 
     initSnakePosition();
     generateApplePosition();
@@ -119,6 +120,9 @@ void SnakeWidget::generateApplePosition() {
             }
         }
     } while (!ok);
+
+    m_appleCounter++;
+    emit appleCounterChanged(m_appleCounter);
 }
 
 void SnakeWidget::initSnakePosition() {

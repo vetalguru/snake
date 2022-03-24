@@ -14,6 +14,9 @@ class SnakeWidget : public QWidget
 public:
     explicit SnakeWidget(QWidget *parent = nullptr);
 
+signals:
+    void appleCounterChanged(int n);
+
 public slots:
     void startGame();
     void pauseGame();
@@ -69,6 +72,7 @@ private:
     bool m_isPaused;
     bool m_isGameOver;
 
+    int m_appleCounter;
 };
 
 #endif // SNAKEWIDGET_H
