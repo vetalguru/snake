@@ -17,21 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     initCenterWidget();
     initActions();
     initConnections();
-
-    // Main menu
-    // File
-    QMenu *fileMenu = menuBar()->addMenu("&File");
-    fileMenu->addAction(exitAction);
-
-    QMenu *gameMenu = menuBar()->addMenu("&Game");
-    gameMenu->addAction(startGameAction);
-    gameMenu->addAction(pauseGameAction);
-    gameMenu->addAction(stopGameAction);
-
-    // About
-    QMenu *aboutMenu = menuBar()->addMenu("&Help");
-    aboutMenu->addAction(aboutQtAction);
-    aboutMenu->addAction(aboutAction);
+    initMainMenu();
 
     // Toolbar
     QToolBar *toolBar = new QToolBar(this);
@@ -87,6 +73,20 @@ void MainWindow::initConnections() {
 
     connect(centralWidget(), SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
     connect(centralWidget(), SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
+}
+
+void MainWindow::initMainMenu() {
+    QMenu *fileMenu = menuBar()->addMenu("&File");
+    fileMenu->addAction(exitAction);
+
+    QMenu *gameMenu = menuBar()->addMenu("&Game");
+    gameMenu->addAction(startGameAction);
+    gameMenu->addAction(pauseGameAction);
+    gameMenu->addAction(stopGameAction);
+
+    QMenu *aboutMenu = menuBar()->addMenu("&Help");
+    aboutMenu->addAction(aboutQtAction);
+    aboutMenu->addAction(aboutAction);
 }
 
 void MainWindow::deleteActions() {

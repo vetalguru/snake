@@ -21,6 +21,7 @@ private:
     void initCenterWidget();
     void initActions();
     void initConnections();
+    void initMainMenu();
     void initStatusBar();
 
     void deleteActions();
