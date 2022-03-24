@@ -14,9 +14,11 @@ public:
 private slots:
     void aboutDialog();
     void changeAppleNumber(int);
+    void changeSnakeLength(int);
 
 private:
     QLabel *m_appleCounterLabel;
+    QLabel *m_snakeLengthLabel;
 };
 
 #endif // MAINWINDOW_H

@@ -129,6 +129,7 @@ void SnakeWidget::initSnakePosition() {
     m_direction = Direction::RIGHT;
 
     m_currentSnakeSize = SNAKE_MIN_SIZE;
+    emit snakeSizeChanged(m_currentSnakeSize);
     for (int i =0; i < m_currentSnakeSize; ++i) {
         m_snake[i].setX(50 - i * DOT_SIZE);
         m_snake[i].setY(50);
@@ -142,6 +143,7 @@ void SnakeWidget::drawApple(QPainter &p) {
 void SnakeWidget::appleEatingHandler() {
     if (m_snake[0] == m_currentApplePoint) {
         m_currentSnakeSize++;
+        emit snakeSizeChanged(m_currentSnakeSize);
         generateApplePosition();
     }
 }

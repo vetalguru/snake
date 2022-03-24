@@ -16,6 +16,7 @@ public:
 
 signals:
     void appleCounterChanged(int n);
+    void snakeSizeChanged(int s);
 
 public slots:
     void startGame();

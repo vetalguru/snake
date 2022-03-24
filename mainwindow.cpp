@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
 
     connect(centralWidget, SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
+    connect(centralWidget, SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
 
     // Main menu
     // File
@@ -61,9 +62,12 @@ MainWindow::MainWindow(QWidget *parent)
     addToolBar(toolBar);
 
     // Statusbar
-    statusBar()->addPermanentWidget(new QLabel("Apple Num: "));
+    statusBar()->addPermanentWidget(new QLabel("Apple number: "));
     m_appleCounterLabel = new QLabel(QString::number(0));
     statusBar()->addPermanentWidget(m_appleCounterLabel);
+    statusBar()->addPermanentWidget(new QLabel("| Snake size: "));
+    m_snakeLengthLabel = new QLabel(QString::number(0));
+    statusBar()->addPermanentWidget(m_snakeLengthLabel);
 }
 
 void MainWindow::aboutDialog() {
@@ -74,4 +78,8 @@ void MainWindow::aboutDialog() {
 
 void MainWindow::changeAppleNumber(int number) {
     m_appleCounterLabel->setText(QString::number(number));
+}
+
+void MainWindow::changeSnakeLength(int size) {
+    m_snakeLengthLabel->setText(QString::number(size));
 }
