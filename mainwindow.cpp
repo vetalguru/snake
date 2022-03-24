@@ -18,16 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     initActions();
     initConnections();
     initMainMenu();
-
-    // Toolbar
-    QToolBar *toolBar = new QToolBar(this);
-    toolBar->addAction(startGameAction);
-    toolBar->addAction(pauseGameAction);
-    toolBar->addAction(stopGameAction);
-    toolBar->addAction(exitAction);
-    toolBar->addAction(aboutAction);
-    addToolBar(toolBar);
-
+    initToolBar();
     initStatusBar();
 }
 
@@ -87,6 +78,17 @@ void MainWindow::initMainMenu() {
     QMenu *aboutMenu = menuBar()->addMenu("&Help");
     aboutMenu->addAction(aboutQtAction);
     aboutMenu->addAction(aboutAction);
+}
+
+void MainWindow::initToolBar() {
+    QToolBar *toolBar = new QToolBar(this);
+    toolBar->addAction(startGameAction);
+    toolBar->addAction(pauseGameAction);
+    toolBar->addAction(stopGameAction);
+    toolBar->addAction(exitAction);
+    toolBar->addAction(aboutAction);
+    toolBar->setMovable(false);
+    addToolBar(toolBar);
 }
 
 void MainWindow::deleteActions() {

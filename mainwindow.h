@@ -22,6 +22,7 @@ private:
     void initActions();
     void initConnections();
     void initMainMenu();
+    void initToolBar();
     void initStatusBar();
 
     void deleteActions();
