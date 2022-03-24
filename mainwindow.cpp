@@ -14,22 +14,19 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
-    // Central Widget
-    SnakeWidget *centralWidget = new SnakeWidget(this);
-    setCentralWidget(centralWidget);
-
+    initCenterWidget();
     initActions();
 
     // Connections
-    connect(startGameAction, SIGNAL(triggered()), centralWidget, SLOT(startGame()));
-    connect(pauseGameAction, SIGNAL(triggered()), centralWidget, SLOT(pauseGame()));
-    connect(stopGameAction, SIGNAL(triggered()), centralWidget, SLOT(stopGame()));
+    connect(startGameAction, SIGNAL(triggered()), centralWidget(), SLOT(startGame()));
+    connect(pauseGameAction, SIGNAL(triggered()), centralWidget(), SLOT(pauseGame()));
+    connect(stopGameAction, SIGNAL(triggered()), centralWidget(), SLOT(stopGame()));
     connect(exitAction, &QAction::triggered, qApp, QApplication::quit);
     connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
 
-    connect(centralWidget, SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
-    connect(centralWidget, SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
+    connect(centralWidget(), SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
+    connect(centralWidget(), SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
 
     // Main menu
     // File
@@ -74,6 +71,11 @@ void MainWindow::changeAppleNumber(int number) {
 
 void MainWindow::changeSnakeLength(int size) {
     m_snakeLengthLabel->setText(QString::number(size));
+}
+
+void MainWindow::initCenterWidget() {
+    SnakeWidget *centralWidget = new SnakeWidget(this);
+    setCentralWidget(centralWidget);
 }
 
 void MainWindow::initActions() {

@@ -18,6 +18,7 @@ private slots:
     void changeSnakeLength(int);
 
 private:
+    void initCenterWidget();
     void initActions();
     void initStatusBar();
 
