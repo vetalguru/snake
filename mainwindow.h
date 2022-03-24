@@ -10,6 +10,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 private slots:
     void aboutDialog();
@@ -17,9 +18,21 @@ private slots:
     void changeSnakeLength(int);
 
 private:
+    void initActions();
     void initStatusBar();
 
+    void deleteActions();
+
 private:
+    // Actions
+    QAction *startGameAction;
+    QAction *pauseGameAction;
+    QAction *stopGameAction;
+    QAction *exitAction;
+    QAction *aboutQtAction;
+    QAction *aboutAction;
+
+    // StatusBar labels
     QLabel *m_appleCounterLabel;
     QLabel *m_snakeLengthLabel;
 };

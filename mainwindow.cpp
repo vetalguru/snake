@@ -18,13 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     SnakeWidget *centralWidget = new SnakeWidget(this);
     setCentralWidget(centralWidget);
 
-    // Actions
-    QAction *startGameAction = new QAction(QIcon::fromTheme("media-playback-start"), "&Start", this);
-    QAction *pauseGameAction = new QAction(QIcon::fromTheme("media-playback-pause"), "&Pause", this);
-    QAction *stopGameAction = new QAction(QIcon::fromTheme("media-playback-stop"), "S&top", this);
-    QAction *exitAction = new QAction(QIcon::fromTheme("application-exit"), "&Exit", this);
-    QAction *aboutQtAction = new QAction(QIcon::fromTheme("help-about"), "About &Qt ...", this);
-    QAction *aboutAction = new QAction(QIcon::fromTheme("help-about"), "&About ...", this);
+    initActions();
 
     // Connections
     connect(startGameAction, SIGNAL(triggered()), centralWidget, SLOT(startGame()));
@@ -64,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent)
     initStatusBar();
 }
 
+MainWindow::~MainWindow() {
+    deleteActions();
+}
+
 void MainWindow::aboutDialog() {
     QMessageBox msg;
     msg.setText("Snake");
@@ -76,6 +74,24 @@ void MainWindow::changeAppleNumber(int number) {
 
 void MainWindow::changeSnakeLength(int size) {
     m_snakeLengthLabel->setText(QString::number(size));
+}
+
+void MainWindow::initActions() {
+    startGameAction = new QAction(QIcon::fromTheme("media-playback-start"), "&Start", this);
+    pauseGameAction = new QAction(QIcon::fromTheme("media-playback-pause"), "&Pause", this);
+    stopGameAction = new QAction(QIcon::fromTheme("media-playback-stop"), "S&top", this);
+    exitAction = new QAction(QIcon::fromTheme("application-exit"), "&Exit", this);
+    aboutQtAction = new QAction(QIcon::fromTheme("help-about"), "About &Qt ...", this);
+    aboutAction = new QAction(QIcon::fromTheme("help-about"), "&About ...", this);
+}
+
+void MainWindow::deleteActions() {
+    delete aboutAction;
+    delete aboutQtAction;
+    delete exitAction;
+    delete stopGameAction;
+    delete pauseGameAction;
+    delete startGameAction;
 }
 
 void MainWindow::initStatusBar() {
