@@ -78,23 +78,35 @@ void SnakeWidget::timerEvent(QTimerEvent *e) {
 }
 
 void SnakeWidget::keyPressEvent(QKeyEvent *e) {
-    int key = e->key();
-
-    if ((key == Qt::Key_Left) && m_direction != Direction::RIGHT) {
-        m_direction = Direction::LEFT;
+    switch (e->key()){
+    case Qt::Key_Left: {
+        if (m_direction != Direction::RIGHT) {
+            m_direction = Direction::LEFT;
+        }
+        break;
     }
-
-    if ((key == Qt::Key_Right) && m_direction != Direction::LEFT) {
-        m_direction = Direction::RIGHT;
+    case Qt::Key_Right: {
+        if (m_direction != Direction::LEFT) {
+            m_direction = Direction::RIGHT;
+        }
+        break;
     }
-
-    if ((key == Qt::Key_Up) && m_direction != Direction::DOWN) {
-        m_direction = Direction::UP;
+    case Qt::Key_Up: {
+        if (m_direction != Direction::DOWN) {
+            m_direction = Direction::UP;
+        }
+        break;
     }
-
-    if ((key == Qt::Key_Down) && m_direction != Direction::UP) {
-        m_direction = Direction::DOWN;
+    case Qt::Key_Down: {
+        if (m_direction != Direction::UP) {
+            m_direction = Direction::DOWN;
+        }
+        break;
     }
+    default: {
+        assert(false && "Unsupported direction");
+    }
+    };
 }
 
 void SnakeWidget::setBackgroundColor() {
