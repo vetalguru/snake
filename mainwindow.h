@@ -20,6 +20,7 @@ private slots:
 private:
     void initCenterWidget();
     void initActions();
+    void initConnections();
     void initStatusBar();
 
     void deleteActions();

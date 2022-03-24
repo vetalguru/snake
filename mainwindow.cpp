@@ -16,17 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     initCenterWidget();
     initActions();
-
-    // Connections
-    connect(startGameAction, SIGNAL(triggered()), centralWidget(), SLOT(startGame()));
-    connect(pauseGameAction, SIGNAL(triggered()), centralWidget(), SLOT(pauseGame()));
-    connect(stopGameAction, SIGNAL(triggered()), centralWidget(), SLOT(stopGame()));
-    connect(exitAction, &QAction::triggered, qApp, QApplication::quit);
-    connect(aboutQtAction, &QAction::triggered, qApp, QApplication::aboutQt);
-    connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutDialog);
-
-    connect(centralWidget(), SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
-    connect(centralWidget(), SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
+    initConnections();
 
     // Main menu
     // File
@@ -85,6 +75,18 @@ void MainWindow::initActions() {
     exitAction = new QAction(QIcon::fromTheme("application-exit"), "&Exit", this);
     aboutQtAction = new QAction(QIcon::fromTheme("help-about"), "About &Qt ...", this);
     aboutAction = new QAction(QIcon::fromTheme("help-about"), "&About ...", this);
+}
+
+void MainWindow::initConnections() {
+    connect(startGameAction, SIGNAL(triggered()), centralWidget(), SLOT(startGame()));
+    connect(pauseGameAction, SIGNAL(triggered()), centralWidget(), SLOT(pauseGame()));
+    connect(stopGameAction, SIGNAL(triggered()), centralWidget(), SLOT(stopGame()));
+    connect(exitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
+
+    connect(centralWidget(), SIGNAL(appleCounterChanged(int)), this, SLOT(changeAppleNumber(int)));
+    connect(centralWidget(), SIGNAL(snakeSizeChanged(int)), this, SLOT(changeSnakeLength(int)));
 }
 
 void MainWindow::deleteActions() {
