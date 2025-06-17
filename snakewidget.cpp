@@ -21,6 +21,8 @@ SnakeWidget::SnakeWidget(QWidget *parent)
 }
 
 void SnakeWidget::startGame() {
+    m_isGameOver = false;
+
     if (m_isPaused) {
         m_isPaused = false;
         return;
@@ -30,7 +32,6 @@ void SnakeWidget::startGame() {
         return;
     }
 
-    m_isGameOver = false;
     m_isStarted = true;
     m_appleCounter = 0;
 
@@ -46,6 +47,10 @@ void SnakeWidget::pauseGame() {
 
 void SnakeWidget::stopGame() {
     m_isStarted = false;
+    if (m_timerId) {
+        killTimer(m_timerId);
+        m_timerId = 0;
+    }
 }
 
 void SnakeWidget::paintEvent(QPaintEvent *e) {
@@ -79,33 +84,30 @@ void SnakeWidget::timerEvent(QTimerEvent *e) {
 
 void SnakeWidget::keyPressEvent(QKeyEvent *e) {
     switch (e->key()){
-    case Qt::Key_Left: {
-        if (m_direction != Direction::RIGHT) {
-            m_direction = Direction::LEFT;
+        case Qt::Key_Left: {
+            if (m_direction != Direction::RIGHT) {
+                m_direction = Direction::LEFT;
+            }
+            break;
         }
-        break;
-    }
-    case Qt::Key_Right: {
-        if (m_direction != Direction::LEFT) {
-            m_direction = Direction::RIGHT;
+        case Qt::Key_Right: {
+            if (m_direction != Direction::LEFT) {
+                m_direction = Direction::RIGHT;
+            }
+            break;
         }
-        break;
-    }
-    case Qt::Key_Up: {
-        if (m_direction != Direction::DOWN) {
-            m_direction = Direction::UP;
+        case Qt::Key_Up: {
+            if (m_direction != Direction::DOWN) {
+                m_direction = Direction::UP;
+            }
+            break;
         }
-        break;
-    }
-    case Qt::Key_Down: {
-        if (m_direction != Direction::UP) {
-            m_direction = Direction::DOWN;
+        case Qt::Key_Down: {
+            if (m_direction != Direction::UP) {
+                m_direction = Direction::DOWN;
+            }
+            break;
         }
-        break;
-    }
-    default: {
-        assert(false && "Unsupported direction");
-    }
     };
 }
 
@@ -142,7 +144,7 @@ void SnakeWidget::initSnakePosition() {
 
     m_currentSnakeSize = SNAKE_MIN_SIZE;
     emit snakeSizeChanged(m_currentSnakeSize);
-    for (int i =0; i < m_currentSnakeSize; ++i) {
+    for (int i = 0; i < m_currentSnakeSize; ++i) {
         m_snake[i].setX(50 - i * DOT_SIZE);
         m_snake[i].setY(50);
     }
@@ -154,9 +156,11 @@ void SnakeWidget::drawApple(QPainter &p) {
 
 void SnakeWidget::appleEatingHandler() {
     if (m_snake[0] == m_currentApplePoint) {
-        m_currentSnakeSize++;
-        emit snakeSizeChanged(m_currentSnakeSize);
-        generateApplePosition();
+        if (m_currentSnakeSize < SNAKE_MAX_SIZE) {
+            m_currentSnakeSize++;
+            emit snakeSizeChanged(m_currentSnakeSize);
+            generateApplePosition();
+        }
     }
 }
 
@@ -167,7 +171,7 @@ void SnakeWidget::drawSnake(QPainter &p) {
 }
 
 void SnakeWidget::moveSnake() {
-    for (int i = m_currentSnakeSize; i > 0; --i) {
+    for (int i = m_currentSnakeSize - 1; i > 0; --i) {
         m_snake[i] = m_snake[i - 1];
     }
 
